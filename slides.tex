@@ -1,0 +1,193 @@
+\documentclass{beamer}
+
+\usetheme{metropolis}
+
+\title{Course Allocation and Modified CEEI}
+\author{Gideon Moore}
+\date{Fall 2019}
+
+\usepackage{microtype}
+
+\usepackage[backend=biber, style=authoryear, maxbibnames=99]{biblatex}
+
+\addbibresource{coursematch.bib}
+
+\setbeamertemplate{section in toc}[sections numbered]
+
+\begin{document}
+\begin{frame}
+\maketitle
+\end{frame}
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+\section{The Course Allocation Problem}
+\begin{frame}{Problem Outline}
+\begin{itemize}
+    \item University needs to decide how to allocate students to courses
+    
+    \item Students enroll in multiple courses, and courses contain multiple students
+    
+    \item Students have preferences over \emph{bundles} of courses
+    
+    \item Courses are indivisible
+\end{itemize}
+\end{frame}
+\begin{frame}{Desirable Properties}
+\begin{itemize}
+    \item Incentive Compatible
+    \pause
+    \item Uncongested
+    \pause
+    \item Efficient
+    \pause
+    \item Fair
+    \pause
+    \item \textbf{Two-Sided}
+\end{itemize}
+\end{frame}
+\begin{frame}{Existing Solutions}
+\begin{itemize}
+    \item Free-For-All
+    \pause 
+    \item Lottery 
+    \pause 
+    \item Serial Dictatorship \parencite{klaus2002}
+    \pause 
+    \item Draft \parencite{budish2012}
+    \pause 
+    \item Point Auction \parencite{sonmez2010}
+\end{itemize}
+\end{frame}
+
+\section{Competitive Equilibrium from Equal Incomes}
+\begin{frame}{\textcite{budish2011}}
+\begin{itemize}
+    \item Students endowed with ``approximately'' equal incomes
+    \item Course bundles are ranked \parencite{budish2016b}
+    \item \textcite{othman2010} algorithm finds prices
+\end{itemize}
+\end{frame}
+\begin{frame}{A-CEEI Properties}
+\begin{itemize}
+    \item Pareto efficient
+    \pause
+    \item Uncongested
+    \pause
+    \item \emph{Approximately} incentive compatible
+    \pause
+    \item \emph{Approximately} fair
+    \pause
+    \item Single sided
+\end{itemize}
+\end{frame}
+\begin{frame}{Two-Sidedness and Externalities}
+Suppose each student-course matching imposed some externality $s_{ij}$ on students and faculty.
+
+Let $\vec{x}_i$ be a vector of booleans indicating student $i$'s enrollment status in each of $M$ courses.
+\pause
+
+Budish's A-CEEI maximizes $$\sum_{i \in \mathcal{S}} \mathcal{U}_i(\vec{x}_i)$$
+\pause
+
+However, a social planner would maximize $$\sum_{i \in \mathcal{S}}\left( \mathcal{U}_i(\vec{x}_i) + \vec{x}_i^T \vec{s}_i \right)$$
+\end{frame}
+\begin{frame}{Proposed Mechanism}
+Administrators can correct externalities by imposing taxes on the course market.
+
+Each student-course pair is assigned some tax rate $k_{ij}$ such that student $i$ faces price $k_{ij} \cdot p_j$ when attempting to purchase course $j$.
+\end{frame}
+\begin{frame}{Properties of Modified CEEI}
+    \begin{itemize}
+        \item Incentive Compatible
+        \pause 
+        
+        \item Uncongested
+        \pause 
+        \item Envy-bounded within a bracket
+        \pause 
+        
+        \item Pareto efficient within a bracket
+        \pause 
+        
+        \item Two-sided
+    \end{itemize}
+\end{frame}
+\begin{frame}{Optimal Taxation}
+Economics 1 tells us to tax each student's enrollment at a rate equal to $s_{ij}$
+\pause 
+
+This doesn't work here due to \emph{lack of an outside good}
+\pause
+
+Severing of price from marginal utility makes optimal taxation a case-by-case question
+\end{frame}
+\begin{frame}{Types of Tax Schema}
+Let each student face a vector of tax rates $\vec{k}_i$
+
+\begin{itemize}
+    \item All students face identical constant tax rate
+    \pause 
+    
+    \item Tax vectors all same direction, varying magnitudes \parencite{miralles2014}
+    \pause 
+    
+    \begin{itemize}
+        \item Serial dictatorship: $k_i \in \left((1 + \mbox{largest permissible bundle size})^{-i}\right)_{i = 1}^N$
+    \end{itemize}
+    \pause 
+    
+    \item Tax vectors vary in direction
+\end{itemize}
+\end{frame}
+
+
+\section{Market Clearing Error}
+\begin{frame}{\textcite{othman2010}}
+Given a course preference and endowment for each student, can generate market clearing prices \pause (kinda)
+\pause 
+
+Each student has at most $M$ budget constraints 
+\pause 
+
+Income dispersion means that in base version, at most $M$ constraints intersect at a single point
+\pause 
+
+Therefore, there are at most $2^M$ demands adjacent to a single point
+\pause 
+
+Demand across a budget constraint shifts by at most $\sqrt{\sigma} = \sqrt{\min(M, 2 \cdot \mbox{max schedule size})}$
+\end{frame}
+\begin{frame}{\textcite{othman2010} Illustration}
+    \centering
+    \includegraphics[width=.6\textwidth]{"Price Discontinuity"}
+\end{frame}
+
+\begin{frame}{Error and the Convex Hull}
+We know there is some ideal demand within the convex hull of the feasible demands
+
+Thus, the worst-case market clearing error is the maximum distance from a feasible demand to a point in the convex hull
+
+Given there are $2^M$ possible points, the worst case is a hypercube with ideal demand equidistant from all vertices. Half the diagonal is $\frac{\sqrt{M\sigma}}{2}$, which is our market clearing error.
+\end{frame}
+
+\begin{frame}{Generalizing with Tax Rates}
+Within a given tax rate, we can apply the basic proof to show at most $M$ constraints intersect
+\pause 
+
+However, we know nothing about constraints under \emph{other} tax rates
+\pause 
+
+Thus, the maximum size of an intersection scales with the maximum number of tax brackets which apply to a single course $h$, with a maximum of $hM$ intersecting planes. In the worst case, each plane is duplicated in each other tax bracket, in which case there exist $2^M$ demands around $p$, but each discontinuity is of magnitude $h\sqrt{\sigma}$.
+
+This again yields a hypercube, now with side length $h\sqrt{\sigma}$, and therefore a diagonal measurement of $h\frac{\sqrt{M\sigma}}{2}$
+\end{frame}
+\begin{frame}{Empiric Results}
+When implemented at Wharton, true market clearing demand was significantly less than the bound.
+
+On average across the four semesters studied, fewer than six seats total were misallocated.
+\end{frame}
+\begin{frame}[allowframebreaks]{Bibliography}
+\printbibliography
+\end{frame}
+\end{document}
