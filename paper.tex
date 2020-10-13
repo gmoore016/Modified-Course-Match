@@ -34,7 +34,7 @@
 \maketitle
 
 \begin{abstract}
-I develop a modified version of \textcite{budish2011}'s \emph{Approximate Competitive Equilibrium from Equal Incomes} (or A-CEEI) which allows school administrators to correct market failures unaddressed in the original mechanism by taxing student enrollment. This system preserves A-CEEI's incentive compatibility and lack of congestion while maintaining reasonable fairness and efficiency bounds, and adds the ability for matches to contain a degree of two-sidedness. While the lack of an outside good prevents computation of an optimal tax rate, I outline the impact of various types of tax schema changes, as well as advise on how to correct tax rates when presented with an undesired equilibrium. Finally I derive a boundary on market-clearing error when computing this allocation given a set tax schema. As far as I am aware, this is the only mechanism developed which is incentive compatible, uncongested, and two-sided that also provides bounds on fairness and efficiency losses.
+I develop a modified version of \textcite{budish2011}'s \emph{Approximate Competitive Equilibrium from Equal Incomes} (or A-CEEI) which allows school administrators to correct externalities unaddressed in the original mechanism by taxing student enrollment. This system preserves A-CEEI's incentive compatibility and lack of congestion while maintaining reasonable fairness and efficiency bounds, and adds the ability for matches to contain a degree of two-sidedness. While the lack of an outside good prevents computation of an optimal tax rate, I outline the impact of various types of tax schema changes, as well as advise on how to correct tax rates when presented with an undesired equilibrium. Finally I derive a boundary on market-clearing error when computing this allocation given a set tax schema. As far as I am aware, this is the only mechanism developed which is incentive compatible, uncongested, and two-sided that also provides bounds on fairness and efficiency losses.
 \end{abstract}
 
 \section{Background}
@@ -52,18 +52,29 @@ When considering mechanisms for matching courses to students, there are several 
     
     \item Fair--Students should receive course bundles which are approximately equally desirable.
     
-    \item Two-Sided--Just as students may prefer certain courses, courses may prefer certain varieties of students, and thus may wish to incentivize their enrollment. 
+    \item Two-Sided--Just as students may prefer certain courses, market administrators may prefer to enroll one student in a course over another.  
 \end{itemize}
 
-The last of the above, two-sidedness, is often neglected in the course matching literature, instead treating courses as indifferent objects. However, there are many reasons why professors or administrators may prioritize certain students, and those priorities may be idiosyncratic over courses. For example, administrators may desire that a senior who requires a course to graduate be given registration priority over sophomores who will have opportunities later in their careers. On the other hand, a creative writing department may wish to prioritize freshmen, who could go on to major in the field, over upperclassmen from other departments taking the subject as an elective. In addition, it is possible students may impose externalities on others. For example, a freshman enrolling in an upper level seminar may require a disproportionate quantity of instructor attention at the expense of their more senior peers.
+The last of the above, two-sidedness, is often neglected in the course matching literature, instead allowing assignment to be dictated exclusively by students' private desires. However, there are myriad reasons a department may wish to express preferences over students. This paper will highlight one motivation in particular: correcting externalities created from student enrollments. 
+
+Consider a market administrator allocating a seat in a high level seminar between a freshman and a senior. If the freshman is liable to struggle in the class, and so would monopolize the professor's attention to the detriment of their classmates, a social planner would prefer to enroll the senior who would be self-sufficient. 
+
+Several allocation mechanisms, as discussed in section \ref{current_solutions}, can handle the above scenario by favoring one group another across the board. For example, a system which enrolled all seniors before beginning to enroll freshmen would never face the problem outlined above. 
+
+However, reconsider the above scenario, but the contested seat is now in an introductory course. While the senior may wish to dabble in the subject before graduation, the freshman has the potential to pursue the major down the line. If additional majors have positive externalities within a department, such as additional seminar discussants and peer reviewers, a social planner would now prefer to enroll the freshman over the senior. 
+
+The two problems above highlight that enrollment externalities occur at the student-course level, meaning any allocation mechanism which cannot correct at this level of detail will be suboptimal. To the best of my knowledge, the mechanism developed in this paper is the first to be incentive compatible, uncongested, and two-sided at the student-course level while also maintaining reasonable bounds on fairness and efficiency. 
 
 \subsection{Current Solutions}
+\label{current_solutions}
 
 \subsubsection{First-Come, First-Served}
 
-Many universities employ a simple ``first-come, first-served'' approach, opening registration simultaneously for all students and barring registration for further students once enrollment hits the cap. However, these markets suffer extreme congestion immediately after the start time, leading students to pursue measures such as writing scripts to enroll in their courses for them.\footnote{McKenzie, Lindsay (2019). ``A Class Registration Bot Backfires.''  https://www.insidehighered.com/news/2019/01/15/computer-program-automatically-registers-students-classes-has-unintended} Thus, courses are not allocated to those who need them most, but instead to the students who are most capable of automation. 
+Many universities employ a simple ``first-come, first-served'' approach, opening registration simultaneously for all students and barring registration for further students once enrollment hits a course's cap. However, these markets suffer extreme congestion immediately after the start time, leading students to pursue measures such as writing scripts to enroll in their courses for them \parencite{mckenzie2019}. Thus, courses are not allocated to those who need them most, but instead to the students who are most capable of automation. 
 
-To satisfy this demand, startups such as ``BU Ninja'' are now licensing their automation services to many students for a fee,\footnote{https://buninja.com/} collecting rents off of the market frictions present in this system. In addition, the congestion in the system undermines the incentive compatibility; if a student anticipates a risk of not getting a highly desired course, and the time required to attempt to enroll in this course would allow other courses they prefer to fill, they may not bother attempting to enroll in the highly-desired course and instead focus on the less-desirable courses. Lastly, this system is in no way two-sided, as course slots are simply taken by the students who get their first. 
+To satisfy this demand, startups such as ``BU Ninja'' are now licensing their automation services to many students for a fee,\footnote{https://buninja.com/} collecting rents off of the market frictions present in this system. In addition, the congestion in the system undermines the incentive compatibility; if a student anticipates a risk of not getting a highly desired course, and the time required to attempt to enroll in this course would allow other courses they prefer to fill, they may not bother attempting to enroll in the highly-desired course and instead focus on the less-desirable courses. 
+
+This mechanism can be made moderately two-sided by staggering enrollment periods over groups of students. For example, several state universities use the above mechanism but stagger enrollment in order of class year, such that seniors may enroll starting Tuesday morning, while juniors must wait until Wednesday morning. Frequently honors colleges within large universities are also provided with priority enrollment. While this does allow the university to express preferences over students, it forces all courses to express the same preferences, rather than varying at the student-course level. To rectify this problem, courses may also reserve a fixed number of seats for underclass students; however, this can create inefficiency if the number of reserved seats is too small or too large rather than being determined endogenously.
 
 \subsubsection{Lotteries}
 
@@ -78,7 +89,7 @@ This system also struggles to handle complementarities and substitutabilities. G
 The simplest canonical example meeting our incentive compatibility, uncongestedness, and efficiency constraints is a repeated serial dictatorship. In an arbitrary order, students may choose their ideal course schedule from the remaining available seats. Under this mechanism, each student on their turn has no reason to choose a bundle other than their most preferred, and each actor may take as much time in their choice as desired. Further, given each student takes their most preferred bundle available, you cannot improve any student's bundle without making another student worse off, meaning the mechanism is guaranteed to be Pareto efficient. This mechanism is also able to handle complementarities and substitutabilities, unlike those above; if any parts of a complement are unavailable, the student simply will not choose any, and no one will choose multiple courses within the same substitution group.
 
 
-Unfortunately, this system is extremely unfair--it is possible for one student to receive a schedule of nothing but overbooked courses, while another student receives none of their desired courses. Lastly, this mechanism is wholly single-sided; since students choose whatever schedule they desire, there is no capacity for courses to influence the allocation.
+Unfortunately, this system is extremely unfair--it is possible for one student to receive a schedule of nothing but overbooked courses, while another student receives none of their desired courses. Lastly, this mechanism is wholly single-sided; since students choose whatever schedule they desire, there is no capacity for a market administrator to correct for externalities.
 
 \subsubsection{Draft}
 
@@ -86,7 +97,7 @@ One way to make the serial dictatorship more fair is to have students choose one
 
 However, the draft has many problems of its own; first and foremost, it is no longer strategyproof. Under a draft, students must decide whether to take their first choice course first, or choose a more-popular, less-preferred course in hopes their true first choice will come back around the table. This introduces two avenues for deadweight loss. First, the most popular courses face even higher demand, making the students who desire those courses worse off. Second, it is possible students miscalculate whether their favorite course will still be open on their following turn, meaning they end up with a less desirable course despite the fact the more desirable course was at one point available. Thus, the non-strategyproofness of the mechanism imposes real costs on the students.
 
-This mechanism also struggles with complementarities; in order to get both parts of a complement, a student must choose the first course before they are guaranteed enrollment in the second course, with no guarantee the second course will still be available during their next turn. Lastly, there is no course agency present in this mechanism; as students act as a dictator on their turn, courses have no input over who enrolls.
+This mechanism also struggles with complementarities; in order to get both parts of a complement, a student must choose the first course before they are guaranteed enrollment in the second course, with no guarantee the second course will still be available during their next turn. Lastly, there is no course agency present in this mechanism; as students act as a dictator on their turn, courses have no input over who enrolls, meaning there is no ability to correct any externalities.
 
 \subsubsection{Point Auction}
 
@@ -102,6 +113,10 @@ According to the Second Welfare Theorem as defined in \textcite{arrow1951}, mark
 According to \textcite{miralles2014}, the Second Welfare Theorem remains applicable in many-one matching markets with no transfers, despite the potential for satiation and lack of currency. They claim that ``in market design contexts, our characterization of efficient assignments allows one to restrict attention to price mechanisms at least in settings, such as large markets, where such mechanisms are incentive compatible'' \parencite[p. 2]{miralles2014}.
 
 By breaking each of our many-seat courses into several one-seat courses, it is trivial to transform the course allocation problem into a form of the school choice problem they use as their example such that each seat is assigned to only one student, but each student may be assigned many seats. Thus, conditional on the existence of a strategyproof, price-based mechanism--which I develop in section \ref{ext}--I claim that this mechanism can reach any Pareto-efficient allocation of courses through sufficient budget variation.
+
+\subsection{Enrollment Externalities}
+
+TODO? REMARKABLY LITTLE LITERATURE...
 
 \section{The Math}
 
@@ -174,7 +189,7 @@ I will now show none of these four manipulations are profitable.
 
 Thus, truthtelling weakly dominates any manipulation where $\v_i$ is artificially low
 
-\item Suppose $i$ were to manipulate their preferences such that $\vec{x}_i$ was falsely ranked above another $\vec{x}_i'$. We already know from our equilibrium condition that $\v_i'$ is unachievable given the budget constraint. Thus, $i$ has not changed their outcome.
+\item Suppose $i$ were to manipulate their preferences such that $\vec{x}_i$ were falsely ranked above another $\vec{x}_i'$. We already know from our equilibrium condition that $\v_i'$ is unachievable given the budget constraint. Thus, $i$ has not changed their outcome.
 
 \item Suppose $i$ were to manipulate their preferences above $\v_i$. We know none of these bundles are achievable; thus, their ordering is irrelevant, and $i$ will still end up with bundle $\v_i$. 
 
@@ -203,15 +218,15 @@ I would argue that a proper implementation of my mechanism would have relatively
 
 In addition, if this problem becomes common, this may be indicative of a larger issue of undersupply of mandatory courses. By making a highly overbooked course mandatory, a university implicitly places a cap on the total number of majors in that department. This is fundamentally incompatible with allowing all who wish to major in a department to graduate. There is no allocation mechanism which can solve this problem; there simply aren't enough seats for the number of students. 
 
-In the general case, where a student appeals to receive a non-mandatory course, it would be reasonable to allow changes given extenuating circumstances. One solution would be to allow students to take ``advances'' on their endowments from later semesters. This would solve the problem in the short term, but may raise similar issues down the road if the student then doesn't have enough credit remaining in the later semester. From my perspective, moderate advances seem permissible at the jurisdiction of the administration conditional on demonstrating the lack of credit in later semesters will not be problematic. 
+In the general case, where a student appeals to receive a non-mandatory course, it would be reasonable to allow changes given extenuating circumstances. One solution would be to allow students to take ``advances'' on their endowments from later semesters. This would solve the problem in the short term, but may raise similar issues down the road if the student then doesn't have enough credit remaining in the later semester. From my perspective, moderate advances seem permissible at the discretion of the administration conditional on demonstrating the lack of credit in later semesters will not be problematic. 
 
-Having said this, it is inadvisable to allow inter-semester transfers generally. Allowing borrowing over time compromises the strategyproofness of the mechanism; if in both freshman and sophomore year I can borrow against my endowment senior year, I may not wish to list my true first choice bundle freshman year, as I would then have less credit available to borrow the following year, as outlined in section \ref{ext}. 
+Having said this, it is inadvisable to allow inter-semester transfers generally. Allowing borrowing over time compromises the strategyproofness of the mechanism; if in both freshman and sophomore year a student can borrow against their endowment senior year, they may not wish to list their true first choice bundle freshman year, as they would then have less credit available to borrow the following year, as outlined in section \ref{ext}. 
 
-Further, inter-temporal transfers undermine the administrator's power to impose time-variant taxes; if the tax scheme is generally favorable to seniors and unfavorable to freshmen, a utility-maximizing student would borrow freshman year against their senior endowment. While this is optimal from that student's perspective, this makes it more difficult to determine optimal taxation, since administrators must anticipate the next four years of tax rates rather than just the current semester's. 
+Further, inter-temporal transfers undermine the administrator's power to impose time-variant taxes; if the tax scheme is generally favorable to seniors and unfavorable to freshmen, a utility-maximizing student may borrow freshman year against their senior endowment in order to smooth their consumption. While this is optimal from that student's perspective, this makes it more difficult to determine optimal taxation, since administrators must anticipate the next four years of tax rates rather than just the current semester's. 
 
 \subsection{Efficiency}
 
-I cannot guarantee Pareto efficiency across brackets; in some sense, this is by design. Under an optimal tax schema, a student's enrollment in a course is taxed because they impose some social cost; thus, even if their enrollment would be privately preferred, and thus a trade for this seat would make both them and their trading partner better off, the market administrator has decided the social cost of this trade outweighs the private benefit. 
+I cannot guarantee Pareto efficiency across brackets; in some sense, this is by design. Under an optimal tax schema, a student's enrollment in a course is taxed because they impose some social cost; thus, even if their enrollment would be privately preferred, and therefore a trade for this seat would make both them and their trading partner better off, the market administrator has decided the social cost of this trade outweighs the private benefit. 
 
 Among those who impose the same social costs by enrolling in a course, however, market administrators are indifferent about who enrolls, while the students may not be. Thus, an ideal mechanism will be Pareto efficient within a bracket. \textcite{budish2011} shows in Proposition 2 that A-CEEI is Pareto efficient in the special case where all students are in a single tax bracket. Note that when examining any subset of players who share a tax bracket, my modified CEEI becomes equivalent to Budish's A-CEEI. Therefore, we can show that this mechanism must be Pareto efficient within a bracket.
 
@@ -233,7 +248,7 @@ We know that the subset of students within a given tax schema experience the gam
 
 \subsubsection{Theoretical Bounds}
 
-Beyond considering intra-bracket fairness, administrators may place some value on inter-bracket fairness. An ideal mechanism would have students receive course bundles which are approximately equally desirable. Given this is a modified A-CEEI, students begin with endowments which are dispersed uniformly on the interval $[1, 1 + \beta]$, where $0 < \beta < \min\left(N^{-1}, (\mbox{max bundle size})^{-1}\right)$ is arbitrarily small. This means the ratio of the wealth held by the most wealthy person to wealth held by the least wealthy person is bounded by $1 + \beta$.
+Beyond considering intra-bracket fairness, administrators may place some value on inter-bracket fairness. An ideal mechanism would have students receive course bundles which are approximately equally desirable. Given this is a modified A-CEEI, students begin with endowments which are dispersed on the interval $[1, 1 + \beta]$, where $0 < \beta < \min\left(N^{-1}, (\mbox{max bundle size})^{-1}\right)$ is arbitrarily small. This means the ratio of the wealth held by the most wealthy person to wealth held by the least wealthy person is bounded by $1 + \beta$.
 
 Once we introduce taxes, however, this inequality may grow. Let the minimum possible tax rate be 1. In the case where the person with the greatest base endowment only desires courses with the minimum tax rate, their functional endowment is still $1 + \beta$. However, the least fortunate possible person--who has the lowest possible raw endowment and desires only courses taxed at the maximum possible rate--functionally has an endowment of $\max(\vec{k})^{-1}$. Therefore, the ratio of the endowments of the most wealthy person to the least wealthy person would be $\max(\vec{k}) \cdot (1 + \beta)$.
 
@@ -318,5 +333,69 @@ I have shown that introducing a tax scheme into Budish's Approximate Competitive
 
 
 \printbibliography
+
+\pagebreak
+
+\section{Misc. Ideas}
+
+Given communication complexity work in the vein of Hayek, it seems there's a good chance this is the most informationally efficient mechanism for allocating courses: https://web.stanford.edu/~isegal/prices.pdf. Informational efficiency in economies with externalities: https://onlinelibrary-wiley-com.stanford.idm.oclc.org/doi/epdf/10.1111/j.1468-2354.2004.00118.x
+
+\section{Suggestions from Mike Ostrovsky}
+
+\subsection{Continuous Setting}
+
+He recommended I shift to the following continuous setting:
+
+\begin{itemize}
+    \item Have a finite number of courses and student ``types"
+    
+    \item Each student type contains a continuous mass of students
+    
+    \item Each course has a continuous capacity which can be filled by masses of students
+    
+    \item Students can either be uniform or have distinct tastes, whatever makes the math cleaner
+\end{itemize}
+
+Advantages of a continuous setting:
+
+\begin{itemize}
+    \item No need to play with error bounds--everything becomes exact
+    
+    \item Answers may be analytically tractable when they weren't before
+    
+    \item Incentive compatability is obvious since each infintessimally small student is a price taker
+    
+    \item Equilibrium guaranteed to exist
+\end{itemize}
+
+Big question that must be addressed:
+
+\begin{itemize}
+    \item \textbf{How do we set taxes?}
+    
+    \item \textbf{What are the trade-offs?}
+\end{itemize}
+
+Ways to further expand paper:
+
+\begin{itemize}
+    \item How should we set the taxes?
+    
+    \item What can we do besides taxes? Quotas? Subsidies?
+    
+    \item What if we want a heterogeneous class, i.e. there's value from a mix of several groups?
+    
+    \item How far can we push CEEI? What are the limits?
+    
+    \item How do we handle the ``eccentric student'' problem--one who takes three classes with cost zero, and can then put their entire endowment behind a class they don't care about that much? (My note: what if payments had diminishing benefits before scaling, e.g. Bids were actually tax * sqrt(payment)? Would this change anything at all?)
+\end{itemize}
+
+Sources to investigate
+
+\begin{itemize}
+    \item Get the references from Ostrovsky and Schwartz; their model isn't going to necessarily be useful, but the ones they cite may.
+    
+    \item Akbarpour and Nikzad's 2020 RESTUD paper on hard/soft constraints when looking at quotas
+\end{itemize}
 
 \end{document}
